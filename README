@@ -1,0 +1,24 @@
+# build the docker php container cause no one had redis module in it
+docker build -t myphp php/
+
+# start the stack
+docker-compose up -d
+
+
+# go in browser to
+http://localhost/index.php
+
+
+
+
+
+# restart the entire stack
+docker-compose stop && docker-compose rm -f && docker-compose up -d
+
+# watch the logs that docker creates
+docker-compose logs -f
+
+
+# step into a container, use sh cause alpine doesn't have bash
+docker ps -a
+docker exec -it php sh

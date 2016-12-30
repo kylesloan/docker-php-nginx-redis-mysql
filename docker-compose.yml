@@ -1,0 +1,28 @@
+# localhost access root has no password, remote access password is 111111
+mysql:
+  container_name: mysql
+  image: wangxian/alpine-mysql
+
+redis:
+  container_name: redis
+  image: redis:alpine
+
+php:
+  container_name: php
+  image: myphp
+  volumes:
+    - ${PWD}/web:/www:ro
+  links:
+    - mysql
+    - redis
+
+nginx:
+  container_name: nginx
+  image: nginx:alpine
+  volumes:
+    - ${PWD}/nginx:/etc/nginx/conf.d:ro
+    - ${PWD}/web:/usr/share/nginx/html:ro
+  links:
+    - php
+  ports:
+    - "80:80"
